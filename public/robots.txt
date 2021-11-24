@@ -1,0 +1,21 @@
+
+Les étapes a cloner projet laravel depuis git:
+
+1 git clone https://github.com/wassilasghaier/ProCalculate_Backend.git 
+
+2 cd to folder project
+
+3 composer install
+
+4 composer update
+
+5 faire une Copie du fichier .env.example  dans le dossier racine et renommer le fichier copier par .env 
+
+6 Ouvrez votre fichier .env et remplacez le nom de la base de données (DB_DATABASE) par ce que vous avez, 
+le nom d'utilisateur (DB_USERNAME) et le champ de mot de passe (DB_PASSWORD) correspondent à votre configuration.
+
+7 php artisan key:generate
+
+8 php artisan migrate
+
+9 php artisan serve 
