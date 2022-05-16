@@ -6,7 +6,7 @@
                   <div class="iq-card">
                         <div class="iq-card-header d-flex justify-content-between">
                            <div class="iq-header-title">
-                              <h4 class="card-title">Liste Des Utilisateurs</h4>
+                              <h4 class="card-title">Liste Des Utilisateurs simple</h4>
                            </div>
                         </div>
 						@foreach (['danger', 'warning', 'success', 'info'] as $message)
@@ -30,21 +30,22 @@
                                </tr>
                              </thead>
                              <tbody>
-							 @foreach ($parents as $parent)
+							         @foreach ($parents as $parent)
                                <tr>
                                  <td contenteditable="false">{{ $loop->index+1 }}</td>
                                  <td  class= "text-center"contenteditable="false"><img class="rounded-circle img-fluid avatar-40" src="{{$parent->image}}" alt="profile"> </td>
                                  <td contenteditable="false">{{$parent->name}}</td>
-								 <td contenteditable="false">{{$parent->email}}</td>
-								 <td contenteditable="false">{{$parent->phone}}</td>
+								         <td contenteditable="false">{{$parent->email}}</td>
+								         <td contenteditable="false">{{$parent->phone}}</td>
                                  <td>
-								 <div class="flex align-items-center list-user-action">
-								 <a data-toggle="tooltip" data-placement="top" title="" data-original-title="show" href="{{url('/admin/users/profile/'.$parent->id)}}"><i class="ri-slideshow-4-line"></i></a>
-                                          <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" href="{{url('/admin/users/delete/'.$parent->id)}}"><i class="ri-delete-bin-line"></i></a>
+								               <div class="flex align-items-center list-user-action">
+								                  <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Détail" href="{{url('/admin/users/profile/'.$parent->id)}}"><i class="ri-slideshow-4-line"></i></a>
+                                          <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Supprimer" href="{{url('/admin/users/delete/'.$parent->id)}}"><i class="ri-delete-bin-line"></i></a>
+                                          <a data-toggle="tooltip" data-placement="top" title="" data-original-title="déactiver/activer" href="{{url('/admin/users/activate/'.$parent->id)}}"><i class="ri-user-unfollow-line"></i></a>
                                        </div>
                                  </td>
                                </tr>
-							 @endforeach
+							          @endforeach
                              </tbody>
                            </table>
                          </div>                    

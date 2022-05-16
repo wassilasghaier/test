@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>Kolnanemchiw</title>
       <!-- Favicon -->
-      <link rel="shortcut icon" href="{{asset('/soft/images/favicon.ico')}}"/>
+      <link rel="shortcut icon" href="{{asset('/soft/images/favicon.png')}}"/>
       <!-- Bootstrap CSS -->
       <link rel="stylesheet" href="{{asset('/soft/css/bootstrap.min.css')}}">
       <!-- Typography CSS -->
@@ -40,7 +40,7 @@
          <!-- Sidebar  -->
          <div class="iq-sidebar">
             <div class="iq-sidebar-logo d-flex justify-content-between">
-               <a href="index.html">
+               <a href="/">
                <img src="#" class="img-fluid" alt="">
                <span>Kolnanemchiw</span>
                </a>
@@ -59,44 +59,48 @@
                      <li class="{{ Request::is('admin/dashboard') ? 'active' : '' }}">
                         <a href="{{ url('admin/dashboard')}}" class="iq-waves-effect collapsed"><i class="ri-home-4-line"></i><span>Dashboard</span></a>
                      </li>
-                     <li>
+                     <li class="{{ Request::is('/admin/stat*') ? 'active' : '' }}">
+                        <a href="{{ url('/admin/stat')}}" class="iq-waves-effect collapsed"><i class="ri-bar-chart-2-line"></i><span>Statistiques</span></a>
+                     </li>
+                     <!-- <li>
                         <a href="#user-info" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-user-line"></i><span>Gestion Profiles</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
                         <ul id="user-info" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                            <li class="{{ Request::is('admin/roles') ? 'active' : '' }}"><a href="{{ url('admin/roles')}}">Roles</a></li>
                            <li class="{{ Request::is('admin/permissions') ? 'active' : '' }}"><a href="{{ url('/admin/permissions')}}">Permissions</a></li>
                            <li class="{{ Request::is('admin/affectation') ? 'active' : '' }}"><a href="{{ url('/admin/affectation')}}">Affectation</a></li>
                         </ul>
-                     </li>
+                     </li>-->
                      
                      <li>
                         <a href="#ecommerce" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-menu-3-line"></i><span>Gestion utilisateurs</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
                         <ul id="ecommerce" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                           <li class="{{ Request::is('admin/users') ? 'active' : '' }}"><a href="{{ url('admin/users')}}">Users</a></li>
-                           <li class="{{ Request::is('admin/coachs') ? 'active' : '' }}"><a href="{{ url('admin/coachs')}}">Coachs</a></li>
+                           <li class="{{ Request::is('admin/users') ? 'active' : '' }}"><a href="{{ url('admin/users')}}" class="iq-waves-effect collapsed"><i class="ri-user-line"></i><span>Utilisateur simple</span></a></li>
+                           <li class="{{ Request::is('admin/adherents') ? 'active' : '' }}"><a href="{{url('admin/adherents')}}" class="iq-waves-effect collapsed"><i class="ri-user-follow-line"></i><span>Adhérents</span></a></li>
+                           <li class="{{ Request::is('admin/coachs') ? 'active' : '' }}"><a href="{{ url('admin/coachs')}}" class="iq-waves-effect collapsed"><i class="ri-user-star-line"></i><span>Coachs</span></a></li>
+                           <li class="{{ Request::is('admin/demandes') ? 'active' : '' }}"><a href="{{ url('admin/demandes')}}" class="iq-waves-effect collapsed"><i class="ri-file-copy-2-line"></i><span>Validation d'adhésion</span></a></li>              
                         </ul>
                      </li>
-                     <!--
-                     <li class="iq-menu-title"><i class="ri-separator"></i><span>Paiements</span></li> 
-                     <li class="{{ Request::is('admin/packs') ? 'active' : '' }}">
-                        <a href="{{ url('admin/packs')}}" class="iq-waves-effect collapsed"><i class="ri-coupon-line"></i><span>Packs</span></a>
-                     </li>                   
+                    
+                     <li class="iq-menu-title"><i class="ri-separator"></i><span>Clubs</span></li> 
+                     <li class="{{ Request::is('admin/clubs') ? 'active' : '' }}">
+                        <a href="{{ url('admin/clubs')}}" class="iq-waves-effect collapsed"><i class="ri-group-line"></i><span>Clubs</span></a> </li> 
+                        <!--<li class="{{ Request::is('admin/coachs/affected') ? 'active' : '' }}"><a href="{{ url('admin/coachs/affected')}}" class="iq-waves-effect collapsed"><i class="ri-user-shared-line"></i><span>Affectation des coachs</span></a></li> -->
+                        
                      <li>
-                        <a href="#menu-design" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-shopping-cart-line"></i><span>Paiements</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="menu-design" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                           <li class="{{ Request::is('admin/demandes') ? 'active' : '' }}"><a href="{{ url('admin/demandes')}}">Demandes Paiements</a></li>
-                           <li  class="{{ Request::is('admin/paiments') ? 'active' : '' }}"><a href="{{ url('admin/paiments')}}">Paiements Valider</a></li>
-                        </ul>
+                     <li class="iq-menu-title"><i class="ri-separator"></i><span>Evénements</span></li> 
+                     <li class="{{ Request::is('admin/events') ? 'active' : '' }}">
+                        <a href="{{ url('admin/events')}}" class="iq-waves-effect collapsed"><i class="ri-walk-line"></i><span>Evénements</span></a> </li>             
+                     <li> 
+                     <li class="iq-menu-title"><i class="ri-separator"></i><span>Gestion des pages</span></li> 
+                     <li class="{{ Request::is('admin/pages') ? 'active' : '' }}"><a href="{{ url('admin/pages')}}"><i class="ri-book-open-line"></i><span>A propos</span></a></li>
+                     <li class="{{ Request::is('admin/news') ? 'active' : '' }}"><a href="{{ url('admin/news')}}" class="iq-waves-effect collapsed"><i class="ri-newspaper-line"></i><span>Actualités</span></a> </li>    
+                     <li>
+                        <a href="{{ url('admin/clubs')}}" class="iq-waves-effect collapsed"><i class="ri-group-line"></i><span>Clubs</span></a> </li>          
                      </li>
-                     <li class="iq-menu-title"><i class="ri-separator"></i><span>Activités</span></li> 
-                     <li>
-                        <a href="#ui-elements" class="iq-waves-effect collapsed"  data-toggle="collapse" aria-expanded="false"><i class="ri-pencil-ruler-line"></i><span>Operations</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                        <ul id="ui-elements" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                           <li><a href="{{ url('/admin/operations/addition')}}">Addition</a></li>
-                           <li><a href="{{ url('/admin/operations/soustraction')}}">Soustraction</a></li>
-                           <li><a href="{{ url('/admin/operations/multiiplication')}}">Multiplication</a></li>
-                           <li><a href="{{ url('/admin/operations/division')}}">Division</a></li>
-                        </ul>
-                     </li>-->
+                     
+                     
+                     
+                    
                      
                   </ul>
                </nav>
@@ -108,9 +112,9 @@
             <div class="iq-navbar-custom">
                <div class="iq-sidebar-logo">
                   <div class="top-logo">
-                     <a href="index.html" class="logo">
+                     <a href="/" class="logo">
                      <img src="{{asset('/soft/images/logo.png')}}" class="img-fluid" alt="">
-                     <span>Procalculate</span>
+                     <span>Kolnanemchiw</span>
                      </a>
                   </div>
                </div>
@@ -118,8 +122,7 @@
                   <h5 class="mb-0">Dashboard</h5>
                   <nav aria-label="breadcrumb">
                      <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Home</li>
+                        <li class="breadcrumb-item active" aria-current="page">Kolnanemchiw</li>
                      </ul>
                   </nav>
                </div>
@@ -159,7 +162,7 @@
                            <div class="iq-card iq-card-block iq-card-stretch iq-card-height shadow-none m-0">
                               <div class="iq-card-body p-0 ">
                                  <div class="bg-primary p-3">
-                                    <h5 class="mb-0 text-white line-height">Hello Admin</h5>
+                                    <h5 class="mb-0 text-white line-height">Bienvenu Admin</h5>
                                     <span class="text-white font-size-12">Available</span>
                                  </div>
                                  <a href="{{ url('/admin/profile')}}" class="iq-sub-card iq-bg-primary-hover">
@@ -252,5 +255,83 @@
       <script src="{{ asset('soft/js/chart-custom.js') }}"></script>
       <!-- Custom JavaScript -->
       <script src="{{ asset('soft/js/custom.js') }}"></script>
+      <!-- Custom JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+      <!-- Custom JavaScript -->
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0-Kc_lroLnh-k2j194eWExpk7P94FU9o&libraries=places&callback=initialize" async defer></script>
+      <script src="{{ asset('soft/js/mapInput.js') }}"></script>
+      <script>
+         function readURL(input) {
+            if (input.files && input.files[0]) {
+             var reader = new FileReader();
+             reader.onload = function (e) {
+             $('#evt-img-tag').attr('src', e.target.result);
+             }
+             reader.readAsDataURL(input.files[0]);
+             }      
+         }
+         $("#evt_image").change(function(){
+         readURL(this);
+         });
+      </script>
+      <script>
+      $(document).ready(function(){
+
+         $(document).on('change','.cat',function(){ 
+            var cat_id=$(this).val();
+            if(cat_id == 1)
+            { 
+               $('.coachs').css("visibility", "visible"); 
+            }
+            else{ 
+               $('.coachs').css("visibility", "hidden"); 
+            } 
+         });
+         $(document).on('change','.contrie',function(){
+            var contrie_id=$(this).val();
+            console.log(contrie_id);
+            var op=" ";
+            $.ajax({
+             type:'get',
+             url:"{{ url('/admin/clubsbycnt') }}/"+contrie_id,
+             dataType:'json',
+             success:function(data){
+               console.log(data);
+               op+='<option value="" selected>Sélectionner un club</option>'
+               for(var i=0;i<data.length;i++){
+                 op+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+               }
+               $('.clubs').html(" ");
+               $('.clubs').append(op);
+              },
+              error:function(){
+              }
+            });
+         });
+         $(document).on('change','.clubs',function(){
+           var club_id=$(this).val();
+           var op=" ";
+           $.ajax({
+            type:'get',
+            url:"{{ url('/admin/coachbyclub') }}/"+club_id,
+            dataType:'json',
+            success:function(data){
+             op+='<option value="" selected>Sélectionner un coach</option>'
+             for(var i=0;i<data.length;i++){
+             op+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+            }
+            $('.coachs').html(" ");
+            $('.coachs').append(op);
+            },
+             error:function(){
+            }
+            });
+         });
+              
+
+      });
+      </script>
+
+     
    </body>
 </html>

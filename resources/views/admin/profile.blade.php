@@ -29,7 +29,7 @@
                                           </div>
                                           <div class="form-group col-sm-6">
                                              <label for="cname">Role:</label>
-                                             <input type="text" class="form-control" id="cname" value="Parent" readonly>
+                                             <input type="text" class="form-control" id="cname" value="User" readonly>
                                           </div>
                                           <div class="form-group col-sm-6">
                                              <label for="lname">Email:</label>
@@ -49,7 +49,7 @@
                                           </div>
                                           
                                           <div class="form-group col-sm-12">
-                                             <label>Address:</label>
+                                             <label>Addresse:</label>
                                              <textarea class="form-control" name="address" rows="5" value="" style="line-height: 22px;" readonly>
                                              {{$user->adresse}}
                                              </textarea>

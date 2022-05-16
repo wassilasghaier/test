@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\User;
-use App\Models\Paiment;
+use App\Models\Club;
+use App\Models\Event;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -74,11 +75,16 @@ class MainController extends Controller
     function dashboard(){
         $loggedUserInfo= Admin::where('id','=', session('LoggedUser'))->first();
         $users = User::all()->count();
-        $coachs= "0";
-        $marches= "0";
-        $clubs= "0";
-        $news = User::all();
-        return view('admin.dash')->with(['LoggedUserInfo'=>$loggedUserInfo,'users'=>$users,'coachs'=>$coachs,'marches'=>$marches,'clubs'=>$clubs,'news'=>$news]);
+        $coachs= User::whereHas(
+            'roles', function($q){
+                $q->where('name', 'coach');
+            }
+          )->get()->count();
+        $marches= Event::all()->count();
+        $clubs= Club::all()->count();
+        //$news = User::all();
+        $events = Event::all(); 
+        return view('admin.dash')->with(['LoggedUserInfo'=>$loggedUserInfo,'users'=>$users,'coachs'=>$coachs,'marches'=>$marches,'clubs'=>$clubs,'events' => $events]);
     }
 
     function settings(Request $request){

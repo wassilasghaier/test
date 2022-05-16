@@ -30,7 +30,7 @@ class MyTestMail extends Mailable
     public function build()
     {
         $details =   $this->details;
-        return $this->subject('Mail from Procalculate')
+        return $this->subject('Mail from kolnanemchiw')
         ->view('emails.myMail', compact("details"));
     }
 }

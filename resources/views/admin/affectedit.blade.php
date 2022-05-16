@@ -27,7 +27,7 @@
                                           <div class="form-group col-sm-12 col-lg-12">
                                              <label for="fname">titre</label>
                                              <input type="text" class="form-control" name="title" id="fname" name="name" value="{{$menu->title}}" required = "required"  readonly="readonly">
-											 <span class="text-danger">@error('title'){{ $message }} @enderror</span>
+											            <span class="text-danger">@error('title'){{ $message }} @enderror</span>
                                           </div>
 										  <div class="form-group col-sm-12 col-lg-12">
                                                <label for="exampleFormControlSelect2">Liste des roles</label>
@@ -37,7 +37,7 @@
                                                      @endforeach
                                                     </select>
                                           </div>
-                                       </div>
+                                 </div>
 									   <div class="row justify-content-center">
                                        <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
                                        <button type="reset" class="btn iq-bg-danger">Cancle</button>

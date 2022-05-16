@@ -28,11 +28,13 @@ class AuthServiceProvider extends ServiceProvider
         //defin scopes
         Passport::tokensCan([
             'admin' => 'Super admin User Type',
-            'customer' => 'Add/Edit/Delete Users',
+            'utilisateur' => 'Add/Edit/Delete Users',
             'coach' => 'simple manipulation',
+            'adherent' => 'Add/Edit/Delete adherent',
+            'super_coach' => 'Add/Edit/Delete',
         ]);
         Passport::setDefaultScope([
-            'customer'
+            'utilisateur'
         ]);
     }
 }
