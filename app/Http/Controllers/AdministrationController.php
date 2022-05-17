@@ -201,8 +201,8 @@ class AdministrationController extends Controller
           'roles', function($q){
               $q->where('name', 'utilisateur');
           }
-        )->get();
-        return view('admin.parents', ['parents' => $parents]);
+        )->orderBy('id', 'desc')->paginate(8);
+        return view('admin.members', ['parents' => $parents]);
     }
     public function deleteUser($id)
     {
@@ -413,17 +413,28 @@ class AdministrationController extends Controller
       $supercoachs = User::whereHas('roles', function($query){
           $query->where('id', 4);
       })->get();
-      $datas= $coachs->concat($supercoachs);
+      $datas= $coachs->concat($supercoachs);               
      foreach($datas as $data)
       {
         $role = $data->roles()->first();
         $data->role=$role->name;
       }
-   
       return view('admin.coachs.coachs', ['coachs' => $datas]);  
     } 
    
-    
+    public function changeToSupCoach($id){
+      try {
+        $user = User::findOrFail($id);
+      } catch (ModelNotFoundException $e) {
+        return response()->json([
+            'message' => 'User not found.'
+        ], 403);
+      }
+      if($user){
+        $user->roles()->sync(4);
+        return redirect( '/admin/coachs' )->with( 'success', 'Coach mise à jour avec succès' );
+      }
+    }
    
     public function listCoachAffect(){
       $coachs = User::whereHas(
@@ -604,6 +615,19 @@ class AdministrationController extends Controller
       return redirect( '/admin/adherents' )->with( 'success', 'Adhérent mise à jour avec succès' );
     }
   }
+  public function changeToCoach($id){
+    try {
+      $user = User::findOrFail($id);
+    } catch (ModelNotFoundException $e) {
+      return response()->json([
+          'message' => 'User not found.'
+      ], 403);
+    }
+    if($user){
+      $user->roles()->sync(1);
+      return redirect( '/admin/coachs' )->with( 'success', 'Adhérent mise à jour avec succès' );
+    }
+  }
   public function activate($id, Request $request)
   {  
     if(User::where('id', $id)->exists())
@@ -634,7 +658,7 @@ class AdministrationController extends Controller
           'roles', function($q){
               $q->where('name', 'adherent');
           }
-        )->get();
+        )->orderBy('id', 'desc')->paginate(8);
         return view('admin.adherents.adherents', ['users' => $users]);
     }
 }

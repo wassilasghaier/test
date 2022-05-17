@@ -8,6 +8,7 @@ use App\Http\Controllers\ClubController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\StatController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,11 +37,12 @@ Route::group(['prefix' => 'v1','middleware' => 'cors'],function(){
       Route::get('user/events',[EventController::class, 'events']);
       Route::post('user/event/participate',[EventController::class, 'participer']);
       Route::post('user/event/apsent',[EventController::class, 'apsent']);
-      Route::get('user/club',[PassportController::class, 'userClub']);		
+      Route::get('user/club/{id}',[PassportController::class, 'userClub']);		
 	Route::get('user/myevents',[EventController::class, 'myList']);
       Route::post('user/event/create',[EventController::class, 'createEvt']);
       Route::get('user/event/coach',[EventController::class, 'coachEvt']);
-}); 
+     
+     }); 
 }); 
  
 

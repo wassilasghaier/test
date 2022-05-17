@@ -94,7 +94,7 @@ class ClubController extends Controller
     }
     public function listeclubs(Request $request)
     {   
-        $clubs = Club::all(); 
+        $clubs = Club::orderBy('id', 'desc')->paginate(8); 
         return view('admin.clubs.clubs', ['clubs' => $clubs]); 
     }
     public function clubsbycnt($id,Request $request)
@@ -195,5 +195,13 @@ class ClubController extends Controller
            }
          )->where('club_id', $id)->get();
          return response()->json($data, 200);
+    }
+
+    public function contrieClub(Request $request){
+    $contries = Contrie::join('clubs', 'clubs.contrie_id', 'contries.id')
+          ->select('contries.id','contries.name','contries.photo')
+          ->distinct()
+          ->get();
+        return response()->json($contries, 200);
     }
 }

@@ -22,7 +22,7 @@
                      <div class="title-box text-left">
                         <span class="text-warning">Kolnanemchiw</span>
                         <h2 class="title">{{ $page->name}}</h2>
-                        <p class="mb-0">{{ $page->description}}</p>
+                        <p class="mb-0">{!! $page->description !!} </p>
                      </div>
                   </div>
                </div>

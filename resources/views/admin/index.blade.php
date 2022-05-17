@@ -15,6 +15,10 @@
       <link rel="stylesheet" href="{{asset('/soft/css/style.css')}}">
       <!-- Responsive CSS -->
       <link rel="stylesheet" href="{{asset('/soft/css/responsive.css')}}">
+       <!-- summernote -->
+       <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+ 
+
    </head>
    <body>
       <!-- loader Start -->
@@ -92,7 +96,7 @@
                         <a href="{{ url('admin/events')}}" class="iq-waves-effect collapsed"><i class="ri-walk-line"></i><span>Evénements</span></a> </li>             
                      <li> 
                      <li class="iq-menu-title"><i class="ri-separator"></i><span>Gestion des pages</span></li> 
-                     <li class="{{ Request::is('admin/pages') ? 'active' : '' }}"><a href="{{ url('admin/pages')}}"><i class="ri-book-open-line"></i><span>A propos</span></a></li>
+                     <li class="{{ Request::is('admin/pages') ? 'active' : '' }}"><a href="{{ url('admin/pages/1/edit')}}"><i class="ri-book-open-line"></i><span>A propos</span></a></li>
                      <li class="{{ Request::is('admin/news') ? 'active' : '' }}"><a href="{{ url('admin/news')}}" class="iq-waves-effect collapsed"><i class="ri-newspaper-line"></i><span>Actualités</span></a> </li>    
                      <li>
                         <a href="{{ url('admin/clubs')}}" class="iq-waves-effect collapsed"><i class="ri-group-line"></i><span>Clubs</span></a> </li>          
@@ -257,6 +261,8 @@
       <script src="{{ asset('soft/js/custom.js') }}"></script>
       <!-- Custom JavaScript -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+      <!-- Summernote -->
+      <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
       <!-- Custom JavaScript -->
       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0-Kc_lroLnh-k2j194eWExpk7P94FU9o&libraries=places&callback=initialize" async defer></script>
       <script src="{{ asset('soft/js/mapInput.js') }}"></script>
@@ -327,11 +333,11 @@
             }
             });
          });
-              
+         $('#summernote').summernote()   
 
       });
       </script>
-
-     
+      <script>
+      </script>
    </body>
 </html>

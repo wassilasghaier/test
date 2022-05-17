@@ -86,7 +86,7 @@ class PagesController extends Controller
           if(($request->file('image') != null))
           {$page->image = $path;}
           $page->save();
-          return redirect( 'admin/pages' )->with( 'success', "Les informations de la page ont été mises à jour avec succès." );
+          return redirect( 'admin/pages/1/edit' )->with( 'success', "Les informations de la page ont été mises à jour avec succès." );
           //return response()->json(['message'=>'Menu updated successfully.']);
       }
       public function listePages()

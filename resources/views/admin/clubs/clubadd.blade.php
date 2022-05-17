@@ -43,7 +43,7 @@
                                           </div>
                                           <div class="form-group col-sm-12 col-lg-12">
                                              <label for="fname">Description</label>
-                                             <textarea class="form-control" name="description" id="fname" required = "required"></textarea>
+                                             <textarea class="form-control" name="description" id="summernote" required = "required"></textarea>
 											            <span class="text-danger">@error('description'){{ $message }} @enderror</span>
                                           </div>
                                           <div class="form-group col-sm-12 col-lg-12">

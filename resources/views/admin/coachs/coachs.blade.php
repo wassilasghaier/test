@@ -9,7 +9,7 @@
                               <h4 class="card-title">Liste Des Coachs</h4>
                            </div>
                         </div>
-						@foreach (['danger', 'warning', 'success', 'info'] as $message)
+						      @foreach (['danger', 'warning', 'success', 'info'] as $message)
                                        @if(Session::has($message))
                                         <div class="alert alert-{{ $message }}">
 							              <p>{{ Session::get($message) }}</p>
@@ -78,13 +78,15 @@
                                           <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Modifier" href="{{url('/admin/coachs/edit/'.$coach->id)}}"><i class="ri-pencil-line"></i></a>
                                           <a data-toggle="tooltip" data-placement="top" title="" data-original-title="supprimer" href="{{url('/admin/coachs/delete/'.$coach->id)}}"><i class="ri-delete-bin-line"></i></a>
                                           <a data-toggle="tooltip" data-placement="top" title="" data-original-title="déactiver/activer" href="{{url('/admin/coachs/activate/'.$coach->id)}}"><i class="ri-user-unfollow-line"></i></a>
+                                          <a data-toggle="tooltip" data-placement="top" title="" data-original-title="dévenir super coach" href="{{url('/admin/coachs/change/'.$coach->id)}}"> <i class="ri-user-star-line"></i></a>
                                        </div>
                                  </td>
                                </tr>
 							         @endforeach
                              </tbody>
                            </table>
-                         </div>                    
+                        </div> 
+                                    
                      </div>
                   </div>
             </div>

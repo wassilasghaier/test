@@ -67,7 +67,7 @@
                                            </div>
                                            <div class="form-group col-sm-12 col-lg-12">
                                              <label for="fname">Description *</label>
-                                             <textarea class="form-control" name="description" id="fname" ></textarea>
+                                             <textarea class="form-control" name="description"  >Description</textarea>
 											            <span class="text-danger">@error('description'){{ $message }} @enderror</span>
                                            </div>
                                           <div class="form-group col-sm-12 col-lg-12">
@@ -80,7 +80,7 @@
                                              <input type="time" class="form-control" name="time" id="fname" >
 											            <span class="text-danger">@error('time'){{ $message }} @enderror</span>
                                           </div>
-                                          <div class="form-group col-sm-12 col-lg-12">
+                                        <!--  <div class="form-group col-sm-12 col-lg-12">
                                              <label for="fname">Endroit *</label>
                                              <input type="text" class="form-control" name="place" id="fname" placeholder="Bizeret" >
 											           <span class="text-danger">@error('place'){{ $message }} @enderror</span>
@@ -94,7 +94,7 @@
                                              <label for="fname">Longitude *</label>
                                              <input type="number" class="form-control" name="lang" id="fname" placeholder="9.8264848" step="any">
 											           <span class="text-danger">@error('lang'){{ $message }} @enderror</span>
-                                          </div>
+                                          </div>-->
                                           <div class="form-group col-sm-12 col-lg-12">
                                              <label for="fname">kilometrage *</label>
                                              <input type="number" class="form-control" name="kilometrage" id="fname" placeholder="4km" >
@@ -107,23 +107,24 @@
                                              </div>
                                              <span class="text-danger">@error('image'){{ $message }} @enderror</span>
                                           </div>
-                                          <div class="col-sm-12 col-lg-12">
+                                          <div class="col-sm-12 col-lg-12 text-center">
                                           <img src="{{ url('/') }}/soft/images/placeholder.png" id="evt-img-tag" width="200px"/>
                                           </div>
                                        </div>
                                           <hr>
                                           <h5 class="mb-3">Endroit/Lieu</h5>
                                           <div class="form-group col-sm-12 col-lg-12">
-                                            <label for="address_address">Addresse</label>
-                                            <input type="text" id="address-input" name="address_address" class="form-control map-input">
-                                            <input type="hidden" name="address_latitude" id="address-latitude" value="0" />
-                                            <input type="hidden" name="address_longitude" id="address-longitude" value="0" />
+                                            <label for="place">Addresse *</label>
+                                            <input type="text" id="address-input" name="place" class="form-control map-input">
+                                            <span class="text-danger">@error('place'){{ $message }} @enderror</span>
+                                            <input type="hidden" name="lat" id="address-latitude" value="0" />
+                                            <input type="hidden" name="lang" id="address-longitude" value="0" />
                                           </div>
                                           <div id="address-map-container" style="width:100%;height:400px; ">
                                                <div style="width: 100%; height: 100%" id="address-map"></div>
                                           </div>
                                        
-									            <div class="row justify-content-center">
+									            <div class="row justify-content-center mt-2">
                                             <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
                                             <button type="reset" class="btn iq-bg-danger">Annuler</button>
 									            </div>

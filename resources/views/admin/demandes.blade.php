@@ -43,7 +43,8 @@
                                     <td>{{$demande->club->name}}</td>
                                     <td>
                                        <div class="flex align-items-center list-user-action">
-                                        <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="{{url('/admin/demandes/'.$demande->id.'/affect')}}" ><i class="ri-pencil-line"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Accepter" href="{{url('/admin/demandes/'.$demande->id.'/affect')}}" ><i class="ri-pencil-line"></i></a>
+                                        <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Annuler" href="{{url('/admin/demandes/'.$demande->id.'/cancel')}}" ><i class="ri-pencil-line"></i></a>
                                        </div>
                                     </td>
                                   </tr>

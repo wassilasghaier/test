@@ -41,8 +41,15 @@
                                        </div>
                                     </td>
                                  </tr>
-									      @endforeach
-                              </tbody>
+									       @endforeach
+                                 </tbody>
+                              </table>
+                           </div>
+                           
+                        </div>
+                        <div class="iq-card-footer">
+                           <div class="d-flex justify-content-center">
+                              {!! $clubs->links() !!}
                            </div>
                         </div>
                      </div>

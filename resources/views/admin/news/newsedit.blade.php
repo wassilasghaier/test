@@ -29,10 +29,14 @@
                                                      <input type="text" class="form-control" name="name" id="fname" placeholder="Nom" value="{{ $new->name }}" required = "required" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))'>
 											                   <span class="text-danger">@error('name'){{ $message }} @enderror</span>
                                                 </div>
-										            
+										                  <div class="form-group col-sm-12 col-lg-12">
+                                                    <label for="fname">Lien du page web</label>
+                                                     <input type="text" class="form-control" name="link" id="fname" placeholder="lien du page web" value="{{ $new->link }}" required = "required">
+											                    <span class="text-danger">@error('link'){{ $message }} @enderror</span>
+                                                </div>
                                                 <div class="form-group col-sm-12 col-lg-12">
                                                    <label for="fname">Description</label>
-                                                   <textarea class="form-control" name="description" id="fname" required = "required">{{ $new->description }}</textarea>
+                                                   <textarea class="form-control" name="description" id="summernote" required = "required">{{ $new->description }}</textarea>
 											                  <span class="text-danger">@error('description'){{ $message }} @enderror</span>
                                                 </div>
                                                 <div class="form-group col-sm-12 col-lg-12">

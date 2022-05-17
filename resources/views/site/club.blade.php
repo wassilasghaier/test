@@ -22,7 +22,7 @@
                      <div class="title-box text-left">
                         <span class="text-warning">{{ $club->contrie->name}}</span>
                         <h2 class="title">{{ $club->name}}</h2>
-                        <p class="mb-0">{{ $club->description}}</p>
+                        <p class="mb-0">{!! $club->description !!}</p>
                      </div>
                   </div>
                </div>

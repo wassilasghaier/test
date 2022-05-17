@@ -23,7 +23,9 @@ class Event extends Model
         'participants', 
         'club_id', 
         'categorie_id', 
-        'user_id', 
+        'user_id',
+        'isCancled'
+        
 
     ];
     protected $hidden = [

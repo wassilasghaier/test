@@ -15,6 +15,7 @@ class Actualite extends Model
         'name',
         'description',
         'image',
+        'link',
     ];
     protected $hidden = [
         'updated_at',

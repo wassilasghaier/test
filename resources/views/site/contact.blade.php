@@ -6,15 +6,6 @@
          <section class="overview-block-ptb">
             <div class="container">
                <div class="row">
-                  <div class="col-sm-12">
-                     <div class="title-box  text-center">
-                        <span class="text-warning">Prenez contact avec nous</span>
-                        <h2 class="title">Nous contacter</h2>
-                        <p class="mb-0">Vous pouvez obtenir toutes les informations de contact</p>
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
                   <div class="col-sm-4">
                      <div class="iq-fancy-box text-center">
                         <div class="iq-icon">

@@ -77,7 +77,7 @@
                                            </div>
                                            <div class="form-group col-sm-12 col-lg-12">
                                              <label for="fname">Description</label>
-                                             <textarea class="form-control" name="description" id="fname" >{{ $event->description }}</textarea>
+                                             <textarea class="form-control" name="description" id="summernote">{{ $event->description }}</textarea>
 											            <span class="text-danger">@error('description'){{ $message }} @enderror</span>
                                            </div>
                                           <div class="form-group col-sm-12 col-lg-12">
@@ -90,21 +90,7 @@
                                              <input type="time" class="form-control" name="time" id="fname" value="{{ $event->time }}">
 											            <span class="text-danger">@error('time'){{ $message }} @enderror</span>
                                           </div>
-                                          <div class="form-group col-sm-12 col-lg-12">
-                                             <label for="fname">Endroit</label>
-                                             <input type="text" class="form-control" name="place" id="fname" placeholder="Bizeret" value="{{ $event->place }}" >
-											            <span class="text-danger">@error('place'){{ $message }} @enderror</span>
-                                          </div>
-                                          <div class="form-group col-sm-6 col-lg-6">
-                                             <label for="fname">Latitude</label>
-                                             <input type="number" class="form-control" name="lat" id="fname" placeholder="37.2811363" step="any" value="{{ $event->lat }}">
-											           <span class="text-danger">@error('lat'){{ $message }} @enderror</span>
-                                          </div>
-                                          <div class="form-group col-sm-6 col-lg-6">
-                                             <label for="fname">Longitude</label>
-                                             <input type="number" class="form-control" name="lang" id="fname" placeholder="9.8264848" step="any" value="{{ $event->lang }}">
-											           <span class="text-danger">@error('lang'){{ $message }} @enderror</span>
-                                          </div>
+                                          
                                           <div class="form-group col-sm-12 col-lg-12">
                                              <label for="fname">kilometrage</label>
                                              <input type="number" class="form-control" name="kilometrage" id="fname" placeholder="4km" value="{{ $event->kilometrage }}">
@@ -126,7 +112,19 @@
                                              @endif
                                           </div>
                                        </div>
-									            <div class="row justify-content-center">
+                                       <hr>
+                                          <h5 class="mb-3">Endroit/Lieu</h5>
+                                          <div class="form-group col-sm-12 col-lg-12">
+                                            <label for="place">Addresse *</label>
+                                            <input type="text" id="address-input" name="place" class="form-control map-input" value="{{ $event->place }}">
+                                            <span class="text-danger">@error('place'){{ $message }} @enderror</span>
+                                            <input type="hidden" name="lat" id="address-latitude" value="{{ $event->lat }}" />
+                                            <input type="hidden" name="lang" id="address-longitude" value="{{ $event->lang }}" />
+                                          </div>
+                                          <div id="address-map-container" style="width:100%;height:400px; ">
+                                               <div style="width: 100%; height: 100%" id="address-map"></div>
+                                          </div>
+									            <div class="row justify-content-center mt-2">
                                           <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
                                           <button type="reset" class="btn iq-bg-danger">Annuler</button>
 									            </div>

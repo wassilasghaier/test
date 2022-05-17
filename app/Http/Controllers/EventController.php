@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use App\Models\Contrie;
 use App\Models\Club;
 use App\Models\Event;
@@ -20,9 +21,9 @@ class EventController extends Controller
 {
    
     public function createEventBlade(){
-    $categories = Categorie::all(); 
-    $contries = Contrie::all(); 
-    return view('admin.events.eventadd', ['categories' => $categories,'contries' => $contries]);
+      $categories = Categorie::all(); 
+      $contries = Contrie::all(); 
+      return view('admin.events.eventadd', ['categories' => $categories,'contries' => $contries]);
     }
     public function createEvent(Request $request)
     {   
@@ -97,7 +98,7 @@ class EventController extends Controller
     }
     public function listeEvents(Request $request)
     {   
-        $events = Event::all(); 
+        $events = Event::orderBy('id', 'desc')->paginate(8); 
         return view('admin.events.events', ['events' => $events]); 
     }
     public function clubs($id,Request $request){
@@ -207,6 +208,114 @@ class EventController extends Controller
 
         
     }
+    public function eventToD($id){
+      try {
+        $event = Event::findOrFail($id);
+      } catch (ModelNotFoundException $e) {
+          return redirect( 'admin/events' )->with( 'danger', "évènement n'existe pas." );
+      }
+      $event = Event::where('id',$id)->first();
+      $categories = Categorie::all();
+      if($event->club_id!=null){
+      $club=Club::where('id',$event->club_id)->first();
+      $contrie = Contrie::where('id', $club->contrie_id)->first(); 
+      }
+      $contries = Contrie::all();
+      return view('admin.events.eventdup', ['event' => $event,'categories' => $categories,'contries' => $contries]);
+    }
+    public function eventDuplicate (Request $request)
+    {   
+      $request->validate([
+        'name' => 'required|string',
+        'categorie_id'=> 'required',
+        'niveau'=> 'required',
+        'description'=> 'required',
+        'date'=> 'required',
+        'time'=> 'required',
+        'place'=> 'required',
+        'lat'=> 'required',
+        'lang'=> 'required',
+        'kilometrage'=> 'required',
+        'imageUpdate'=> 'required'
+      ],[
+        'name.required' => 'le champs nom est obligatoir',
+       'name.string' => 'le champs nom doit contenire seulement des lettres',
+       'niveau' => 'le champs niveau est obligatoir',
+       'description.required' => 'le champs description est obligatoir',
+       'date.required' => 'le champs date est obligatoir',
+       'time.required' => 'le champs heure est obligatoir',
+       'place.required' => 'le champs endroit est obligatoir',
+       'lat.required' => 'le champs latitude est obligatoir',
+       'lang.required' => 'le champs langitude est obligatoir',
+       'kilometrage' => 'le champs kilométrage est obligatoir',
+       'imageUpdate.required' => 'le champs image est obligatoir',
+      ]);
+     
+      $event = new Event();
+      
+     try {
+       if ($request->file('image') != null) {
+       $name = date('YmdHis') . "." .$request->file('image')->getClientOriginalExtension();
+       $path = $request->file('image')->move('public/images',$name);}
+     } catch (\Throwable $th) {
+       return redirect()->back()->with('fail','Erreur lors de la creation');
+     }
+     if(($request->club_id != null) &&($request->user_id !=null)) {  
+      $event->name= $request->name;
+      $event->description= $request->description;
+      if(($request->file('image') != null))
+      {$event->image = $path;}
+      else {
+      $event->image = $request->imageUpdate;}
+      $event->place= $request->place;
+      $event->lang =$request->lang;
+      $event->lat = $request->lat;
+      $event-> date= $request->date;
+      $event-> time= $request->time;
+      $event->kilometrage= $request->kilometrage;
+      $event->nivau= $request->niveau;
+      $event-> club_id= $request->club_id;
+      $event-> categorie_id= $request->categorie_id;
+      $event-> user_id= $request->user_id;
+      $event->save();
+     }
+     else{  
+      $event->name= $request->name;
+      $event->description= $request->description;
+      if(($request->file('image') != null))
+      { 
+        $event->image = $path;
+      }
+      else {
+        $event->image = $request->imageUpdate;}
+        $event->place= $request->place;
+        $event->lang =$request->lang;
+        $event->lat = $request->lat;
+        $event-> date= $request->date;
+        $event-> time= $request->time;
+        $event->kilometrage= $request->kilometrage;
+        $event->nivau= $request->niveau;
+        $event-> categorie_id= $request->categorie_id;
+        $event->save();
+      }
+      
+      return redirect( 'admin/events' )->with( 'success', "évenement créé avec succès" );
+
+        
+    }
+    public function cancelEvent($id)
+    {   
+        try {
+          $event = Event::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return redirect( 'admin/events' )->with( 'danger', "évènement n'existe pas." );
+        }
+        $event->isCancled= 2;
+        $event->save();
+        $event->users()->detach();
+        return redirect( 'admin/events' )->with( 'success', 'évènement est annulé avec succès.' );
+    }
+    //user participation
     public function participer(Request $request)
     {   
         try {
@@ -218,25 +327,46 @@ class EventController extends Controller
             return response()->json($message, 400);
         }
         $data = DB::table('event_user')
-        ->where('event_id', 100)
-        ->where('user_id', 50)
+        ->where('event_id', $event->id)
+        ->where('user_id',$user->id)
         ->first();
         if($data == null)
         {  
           $event->users()->attach($user->id);
+
         }
         else
         {  
-          $event->users()->sync($user->id);
+          $event->users()->detach($user->id);
         }
         $message->message="opération effectuée avec succès.";
         return response()->json($message, 200);
         
     }
-    public function apsent(Request $request)
+     //checkuser participation
+     public function checkparticiper($evt, $user)
+     {   
+         $p=false;
+         $data = DB::table('event_user')
+         ->where('event_id', $evt)
+         ->where('user_id',$user)
+         ->first();
+         if($data == null)
+         {  
+           $p=false;
+         }
+         else
+         {  
+          $p=true;
+         }
+         return $p;
+         
+     }
+    //one user abcent
+    public function absent(Request $request)
     {   
       try {
-        $user = Event::findOrFail($request->user_id);
+        $user = User::findOrFail($request->user_id);
         $event = Event::findOrFail($request->evt_id);
         $message= new Message();
       } catch (ModelNotFoundException $e) {
@@ -247,7 +377,22 @@ class EventController extends Controller
       $message->message="opération effectuée avec succès.";
       return response()->json($message, 200);
     }
-    
+    //call absence methode
+    public function absence(Request $request)
+    {   
+      try {
+        $users = $request->users;
+        $event = Event::findOrFail($request->evt_id);
+        $message= new Message();
+      } catch (ModelNotFoundException $e) {
+          $message->message="évènement n'existe pas.";
+          return response()->json($message, 404);
+      }
+      $event->users()->detach($users);
+      $message->message="opération effectuée avec succès.";
+      return response()->json($message, 200);
+    }
+    //mes evenements
     public function myList(Request $request)
     {   
         try {
@@ -280,6 +425,7 @@ class EventController extends Controller
         return response()->json($events, 200);
         
     }
+    //home App Event
     public function events(Request $request)
     {   
       try {
@@ -288,28 +434,33 @@ class EventController extends Controller
           $role = Role::findOrFail($results->id);
           if($role->name == 'utilisateur')
           {
-            $club = Event::where('date', '>=', date("Y-m-d"))->whereNotNull('club_id')->get();
+            $club = Event::where('date', '>=', date("Y-m-d"))->where('isCancled','1')->whereNotNull('club_id')->get();
 			        foreach($club as $c)
 			        {
 				         $cc=Club::select('name')->where('id',$c->club_id)->first();
                  $c->clubname = $cc->name;
                  $coach=User::select('name')->where('id',$c->user_id)->first();
                   if($coach != null)
-                 $c->coach=$coach->name;
+                  {$c->coach=$coach->name;}
                   else
-                 $c->coach="---";
+                  {$c->coach="---";}
+                $c->participate =$this->checkparticiper($c->id,$user->id);
               }
-            $excursion= Event::select('id','name','description','image','place','lang','lat','date','time','kilometrage','nivau','participants','categorie_id')->where('date', '>=', date("Y-m-d"))->where('categorie_id',2)->get();
+          
+            $excursion= Event::select('id','name','description','image','place','lang','lat','date','time','kilometrage','nivau','participants','categorie_id')->where('date', '>=', date("Y-m-d"))->where('isCancled','1')->where('categorie_id',2)->get();
 			        foreach($excursion as $c)
 			        {
                  $c->clubname = "---";
                  $c->coach= "---";
+                 $c->participate =$this->checkparticiper($c->id,$user->id);
               }
-            $weekend= Event::select('id','name','description','image','place','lang','lat','date','time','kilometrage','nivau','participants','categorie_id')->where('date', '>=', date("Y-m-d"))->where('categorie_id',3)->get();
+            
+            $weekend= Event::select('id','name','description','image','place','lang','lat','date','time','kilometrage','nivau','participants','categorie_id')->where('date', '>=', date("Y-m-d"))->where('isCancled','1')->where('categorie_id',3)->get();
 			        foreach($weekend as $c)
 			        {
                  $c->clubname = "---";
                  $c->coach= "---";
+                 $c->participate =$this->checkparticiper($c->id,$user->id);
               }
             return response()->json([
               'club' => $club,
@@ -318,42 +469,45 @@ class EventController extends Controller
             ], 200);
           }
           else {
-            $club = Event::where('club_id',$user->club_id)->where('date', '>=', date("Y-m-d"))->get();
+            $club = Event::where('club_id',$user->club_id)->where('date', '>=', date("Y-m-d"))->where('isCancled','1')->get();
 			      foreach($club as $c)
 			      {
                  $cc=Club::select('name')->where('id',$c->club_id)->first();
                  $c->clubname = $cc->name;
                  $coach=User::select('name')->where('id',$c->user_id)->first();
                   if($coach != null)
-                 $c->coach=$coach->name;
+                  {$c->coach=$coach->name;}
                   else
-                 $c->coach="---";
+                  {$c->coach="---";}
+                $c->participate =$this->checkparticiper($c->id,$user->id);
             }
             if($club == null){
-               $club = Event::where('date', '>=', date("Y-m-d"))->whereNotNull('club_id')->get();
+               $club = Event::where('date', '>=', date("Y-m-d"))->whereNotNull('club_id')->where('isCancled','1')->get();
 				      foreach($club as $c)
 			        {
                  $cc=Club::select('name')->where('id',$c->club_id)->first();
                  $c->clubname = $cc->name;
                  $coach=User::select('name')->where('id',$c->user_id)->first();
                  if($coach != null)
-                 $c->coach=$coach->name;
-                  else
-                 $c->coach="---";
-                 $c->coach=$coach->name;
+                 {$c->coach=$coach->name;}
+                 else
+                 {$c->coach="---";}
+               $c->participate =$this->checkparticiper($c->id,$user->id);
               }
             }
-            $excursion= Event::select('id','name','description','image','place','lang','lat','date','time','kilometrage','nivau','participants','categorie_id')->where('date', '>=', date("Y-m-d"))->where('categorie_id',2)->get();
+            $excursion= Event::select('id','name','description','image','place','lang','lat','date','time','kilometrage','nivau','participants','categorie_id')->where('date', '>=', date("Y-m-d"))->where('categorie_id',2)->where('isCancled','1')->get();
 			      foreach($excursion as $c)
 			      {
               $c->clubname = "---";
               $c->coach= "---";
+              $c->participate =$this->checkparticiper($c->id,$user->id);
             }
-            $weekend= Event::select('id','name','description','image','place','lang','lat','date','time','kilometrage','nivau','participants','categorie_id')->where('date', '>=', date("Y-m-d"))->where('categorie_id',3)->get();
+            $weekend= Event::select('id','name','description','image','place','lang','lat','date','time','kilometrage','nivau','participants','categorie_id')->where('date', '>=', date("Y-m-d"))->where('categorie_id',3)->where('isCancled','1')->get();
 			      foreach($weekend as $c)
 			      {
               $c->clubname = "---";
               $c->coach= "---";
+              $c->participate =$this->checkparticiper($c->id,$user->id);
             }
             return response()->json([
               'club' => $club,
@@ -367,6 +521,7 @@ class EventController extends Controller
             return response()->json($message, 400);
       } 
     }
+    //supercoach
     public function createEvt(Request $request)
     {   
           $validator = Validator::make($request->all(), [
@@ -422,14 +577,28 @@ class EventController extends Controller
           return response()->json($message, 400);
         }   
     }
+    //list event for coach
     public function coachEvt(Request $request)
     {
       $user = Auth::user();
       $events = Event::where('user_id',$user->id)->get();
       return response()->json($events, 200);
     }
-    
-   
+    /*public function evt(Request $request)
+    {
+      $user = Auth::user();
+      $events = Event::where('date', '>=', date("Y-m-d"))->whereNotNull('club_id')
+      ->join('event_user', 'event_user.event_id','=','events.id')
+       ->join('users', function($join) use($user)
+       {
+         $join->on('users.id','=','event_user.user_id')
+         ->where('event_user.user_id', '!=', $user->id);   
+       })
+     ->get();
+     return response()->json([
+      'events' => $events,
+    ], 200);
+    }*/
    
 }
            

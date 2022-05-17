@@ -23,11 +23,13 @@ class NewsController extends Controller
     {   
         $request->validate([
            'name' => 'required|string',
+           'link' => 'required',
            'description'=> 'required',
            'image'=> 'required|mimes:jpg,png,jpeg'
         ],[
           'name.required' => 'le champs nom est obligatoir',
           'name.string' => 'le champs nom doit contenire seulement des lettres',
+          'link.required' => 'le champs lien est obligatoir',
           'description.required' => 'le champs description est obligatoir',
           'image.required' => 'le champs image est obligatoir',
         ]);
@@ -37,11 +39,12 @@ class NewsController extends Controller
           $name = date('YmdHis') . "." .$request->file('image')->getClientOriginalExtension();
           $path = $request->file('image')->move('public/images',$name);}
         } catch (\Throwable $th) {
-          return redirect()->back()->with('fail','Erreur lors de la creation');
+          return redirect()->back()->with('fail','Erreur lors de la création');
         }
           
         $new = Actualite::create([
           'name'=> $request['name'],
+          'link'=> $request['link'],
           'description'=> $request ['description'],
           'image' => $path,
         ]);
@@ -59,10 +62,12 @@ class NewsController extends Controller
       {   
           $request->validate([
             'name' => 'required|string',
+            'link' => 'required',
             'description'=> 'required',
          ],[
          'name.required' => 'le champs nom est obligatoir',
          'name.string' => 'le champs nom doit contenire seulement des lettres',
+         'link.required' => 'le champs lien est obligatoir',
          'description.required' => 'le champs description est obligatoir',
          'imageUpdate.required' => 'le champs image est obligatoir',
          ]);
@@ -82,6 +87,7 @@ class NewsController extends Controller
            return redirect()->back()->with('fail','Erreur lors de la creation');
           }
           $new->name= $request->name;
+          $new->link= $request->link;
           $new->description= $request->description;
           if(($request->file('image') != null))
           {$new->image = $path;}
@@ -105,7 +111,7 @@ class NewsController extends Controller
       public function listeNews()
       {   
         try {
-          $news = Actualite::orderBy('id', 'desc')->get();
+          $news = Actualite::orderBy('id', 'desc')->paginate(8);
         } catch (ModelNotFoundException $e) {
             return redirect( 'admin/news' )->with( 'danger', "évènement n'existe pas." );
         }

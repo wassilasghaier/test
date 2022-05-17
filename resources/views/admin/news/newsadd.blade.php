@@ -26,13 +26,17 @@
                                                 <div class="form-group col-sm-12 col-lg-12">
                                                     <label for="fname">Titre</label>
                                                      <input type="text" class="form-control" name="name" id="fname" placeholder="Nom" required = "required" onkeypress='return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))'>
-											        <span class="text-danger">@error('name'){{ $message }} @enderror</span>
+											                    <span class="text-danger">@error('name'){{ $message }} @enderror</span>
                                                 </div>
-										            
+                                                <div class="form-group col-sm-12 col-lg-12">
+                                                    <label for="fname">Lien du page web</label>
+                                                     <input type="text" class="form-control" name="link" id="fname" placeholder="lien du page web" required = "required">
+											                    <span class="text-danger">@error('link'){{ $message }} @enderror</span>
+                                                </div>
                                                 <div class="form-group col-sm-12 col-lg-12">
                                                    <label for="fname">Description</label>
-                                                   <textarea class="form-control" name="description" id="fname" required = "required"></textarea>
-											       <span class="text-danger">@error('description'){{ $message }} @enderror</span>
+                                                   <textarea class="form-control" name="description" id="summernote" required = "required"></textarea>
+											                  <span class="text-danger">@error('description'){{ $message }} @enderror</span>
                                                 </div>
                                                 <div class="form-group col-sm-12 col-lg-12">
                                                     <div class="custom-file">
@@ -45,10 +49,10 @@
                                                    <img src="{{ url('/') }}/soft/images/placeholder.png" id="evt-img-tag" width="200px"/>
                                                 </div>
                                             </div>
-									        <div class="row justify-content-center">
+									                  <div class="row justify-content-center">
                                               <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
                                               <button type="reset" class="btn iq-bg-danger">Annuler</button>
-									        </div>
+									                  </div>
                                         </form>
                                     </div>
                                </div>

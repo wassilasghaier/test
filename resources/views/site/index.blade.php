@@ -44,8 +44,7 @@
       <script src="{{ asset('site/js/jquery.magnific-popup.min.js') }}"></script>
       <!--  Counter -->
       <script src="{{ asset('site/js/jquery.countTo.js') }}" ></script>
-      <!-- Skrollr JavaScript -->
-      <script src="{{ asset('site/js/skrollr.js') }}"></script>
+     
       <!-- Isotope JavaScript -->
       <script src="{{ asset('site/js/isotope.pkgd.min.js') }}"></script>
       <!-- Retina JavaScript -->

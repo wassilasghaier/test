@@ -17,8 +17,8 @@
                             @endif
                           @endforeach
                         <div class="iq-card-body">
-                         <div id="table" class="table-editable">
-                         <div class="row justify-content-between">
+                           <div id="table" class="table-editable">
+                           <div class="row justify-content-between">
                              <div class="col-sm-12 col-md-6 mb-3">
                                  <div id="user_list_datatable_info" class="dataTables_filter">
                                     <form class="mr-3 position-relative">
@@ -37,7 +37,7 @@
                                  </span>
                               </div>
                            </div>
-                            <table class="table table-bordered table-responsive-md table-striped text-center">
+                           <table class="table table-bordered table-responsive-md table-striped text-center">
                               <thead>
                                <tr>
 							                  <td>#</th>
@@ -50,8 +50,8 @@
                                 <th>Action</th>
                                </tr>
                               </thead>
-                            <tbody>
-							                @foreach ($users as $user)
+                              <tbody>
+							            @foreach ($users as $user)
                                 <tr>
                                  <td contenteditable="false">{{ $loop->index+1 }}</td>
                                  <td contenteditable="false">{{$user->uuid}}</td>
@@ -67,17 +67,23 @@
                                       @endif
                                   </td>
                                  <td>
-								                   <div class="flex align-items-center list-user-action">
-								                    <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Modifier" href="{{url('/admin/adherents/profile/'.$user->id)}}"><i class="ri-slideshow-4-line"></i></a>
-                                    <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Supprimer" href="{{url('/admin/adherents/delete/'.$user->id)}}"><i class="ri-delete-bin-line"></i></a>
-                                    <a data-toggle="tooltip" data-placement="top" title="" data-original-title="déactiver/activer" href="{{url('/admin/adherents/activate/'.$user->id)}}"><i class="ri-user-unfollow-line"></i></a>
+								            <div class="flex align-items-center list-user-action">
+								               <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Modifier" href="{{url('/admin/adherents/profile/'.$user->id)}}"><i class="ri-slideshow-4-line"></i></a>
+                                       <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Supprimer" href="{{url('/admin/adherents/delete/'.$user->id)}}"><i class="ri-delete-bin-line"></i></a>
+                                       <a data-toggle="tooltip" data-placement="top" title="" data-original-title="déactiver/activer" href="{{url('/admin/adherents/activate/'.$user->id)}}"><i class="ri-user-unfollow-line"></i></a>
+                                       <a data-toggle="tooltip" data-placement="top" title="" data-original-title="dévenir coach" href="{{url('/admin/adherents/change/'.$user->id)}}"> <i class="ri-user-star-line"></i></a>
+                                      
                                    </div>
                                  </td>
                                 </tr>
-							                @endforeach
-                             </tbody>
+							            @endforeach
+                              </tbody>
                            </table>
-                         </div>                    
+                           </div>
+                        </div>  
+                        <div class="d-flex justify-content-center">
+                              {!! $users->links() !!}
+                        </div>                 
                      </div>
                   </div>
             </div>

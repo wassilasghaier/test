@@ -69,6 +69,7 @@ Route::group(['middleware'=>['AuthCheck']], function(){
     Route::get('/admin/adherents/delete/{id}',[AdministrationController::class,'deleteAdh']);
     Route::get('/admin/adherents/activate/{id}',[AdministrationController::class,'activate']);
     Route::put('/admin/adherents/profile/edit{id}',[AdministrationController::class,'updateAdh']);
+    Route::get('/admin/adherents/change/{id}',[AdministrationController::class,'changeToCoach']);
     //
     Route::get('/admin/coachs',[AdministrationController::class,'adminListCoach']);
     Route::get('/admin/coachs/create', [AdministrationController::class,'showCoach']);
@@ -81,6 +82,7 @@ Route::group(['middleware'=>['AuthCheck']], function(){
     Route::get('/admin/coachs/affect/{id}',[AdministrationController::class,'coachToAffect']);
     Route::put('/admin/clubs/affect/{id}',[AdministrationController::class,'coachAffect']);
     Route::get('/admin/coachs/activate/{id}',[AdministrationController::class,'activeCompet']);
+    Route::get('/admin/coachs/change/{id}',[AdministrationController::class,'changeToSupCoach']);
     //
     Route::get('/admin/clubs',[ClubController::class,'listeclubs']);
     Route::get('/admin/clubs/create', [ClubController::class,'createClubBlade']);
@@ -90,6 +92,7 @@ Route::group(['middleware'=>['AuthCheck']], function(){
     Route::get('/admin/clubs/delete/{id}',[ClubController::class,'deleteClub']);
     //
     Route::get('/admin/demandes/{id}/affect',[UserController::class,'acceptDemande']);
+    Route::get('/admin/demandes/{id}/cancel',[UserController::class,'cancelDemande']);
     Route::get('/admin/demandes',[UserController::class,'listedemandes']);
     //
     Route::get('/admin/clubsbycnt/{id}',[ClubController::class,'clubsbycnt']);
@@ -101,7 +104,12 @@ Route::group(['middleware'=>['AuthCheck']], function(){
      Route::get('/admin/events/{id}/edit', [EventController::class,'EventEdit']);
      Route::put('/admin/events/{id}', [EventController::class,'updateEvent']);
      Route::get('/admin/events/delete/{id}',[EventController::class,'deleteEvent']);
-    //
+     Route::get('/admin/events/{id}/duplicate', [EventController::class,'eventToD']);
+     Route::post('/admin/events/duplicate', [EventController::class,'eventDuplicate']);
+     Route::get('/admin/events/cancel/{id}',[EventController::class,'cancelEvent']);
+     
+    
+     //
     Route::get('/admin/news',[NewsController::class,'listeNews']);
     Route::get('/admin/news/create', function () {
         return view('admin.news.newsadd');

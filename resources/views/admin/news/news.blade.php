@@ -22,16 +22,15 @@
                                  <thead>
                                     <tr>
                                        <th scope="col">No.</th>
-									   <th scope="col">Image</th>
+									            <th scope="col">Image</th>
                                        <th scope="col">titre</th>
                                        <th scope="col">description</th>
                                        <th scope="col">Action</th>
                                     </tr>
                                  </thead>
                                  <tbody>
-								 @foreach ($news as $new)
-                                 <tr>
-									
+								           @foreach ($news as $new)
+                                   <tr>
                                     <td>{{$loop->index + 1 }}</td>
                                     <td><img src="{{ url('/') }}/{{$new->image}}" style="width:200px"></td>
                                     <td>{{$new->name}}</td>
@@ -42,9 +41,13 @@
                                         <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Supprimer" href="{{url('/admin/news/delete/'.$new->id)}}"><i class="ri-delete-bin-line"></i></a>
                                        </div>
                                     </td>
-                                  </tr>
-								 @endforeach
-                              </tbody>
+                                   </tr>
+								           @endforeach
+                                 <tbody> 
+                              </table>
+                           </div>
+                           <div class="d-flex justify-content-center">
+                              {!! $news->links() !!}
                            </div>
                         </div>
                      </div>

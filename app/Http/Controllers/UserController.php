@@ -138,5 +138,11 @@ class UserController extends Controller
         $user->save();
         return redirect( '/admin/adherents' )->with( 'success', 'demande acceptée avec succès' ); 
     }
+    public function cancelDemande($id, Request $request){   
+        $demande = adherent::where('id',$id)->first();  
+        $demande->is_accepted=1;
+        $demande->save();
+        return redirect( '/admin/demandes' )->with( 'success', 'demande annulée avec succès' ); 
+    }
     
 }
